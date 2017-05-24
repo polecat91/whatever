@@ -1,6 +1,6 @@
 <?php
 
-    session_name($ADM['name']);
+    session_name($APP_CONF['site_name']);
     session_start();
 
 

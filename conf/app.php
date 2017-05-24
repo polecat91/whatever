@@ -4,8 +4,6 @@ include_once 'env.php';
 
 $APP_CONF = array();
 
-$APP_CONF['version'] = $ENV['base']['version'];
-
 $APP_CONF['site_name'] = $ENV['base']['site_name'];
 
 $APP_CONF['base_url'] = "{$ENV['base']['base_local']}{$APP_CONF['site_name']}/";
@@ -18,8 +16,6 @@ $APP_CONF['log'] = "{$APP_CONF['sys']}log/";
 
 $APP_CONF['assets'] = "{$APP_CONF['path']}assets/";
 $APP_CONF['common'] = "{$APP_CONF['lib']}Common/";
-
-$strDefaultLang = "HU";
 
 include_once "{$APP_CONF['common']}Component.php";
 
@@ -38,8 +34,8 @@ if($_REQUEST) {
 }
 
 
+
 include_once 'db.php';
-//$objMenu = new Web_Menu();
 $objInit = new Init();
 
 ?>

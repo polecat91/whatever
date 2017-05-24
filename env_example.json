@@ -1,0 +1,22 @@
+{
+	"env": "local",
+	"base": {
+		"site_name": "_CLEAN_0_01",
+		"base_local": "http://localhost/",
+		"base_path": "/var/www/html/"
+    },
+	"db": {
+		"phptype": "mysqli",
+		"username": "root",
+		"password": "user",
+		"hostspec": "localhost",
+		"database": "ha"
+    },
+	"mail": {
+		"host": "mail.authsmtp.com",
+		"port": "25",
+		"auth": "PLAIN",
+		"username": "USERNAME",
+		"password": "PASSWORD"
+	}
+}

@@ -28,14 +28,7 @@
             return false;
         }
         
-        $item = 
-            strip_tags(
-                str_replace(
-                         TYPE::row_registered_tag
-                        ,TYPE::row_registered_save
-                        ,$objDb->escapeSimple($item)
-                )
-            );
+        $item = $objDb->escapeSimple($item);
     }
     
     array_walk_recursive($_POST, "escapeData");

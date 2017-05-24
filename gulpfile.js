@@ -58,7 +58,7 @@ var main            = './assets/';
 //css
 var styleMixin      = './sys/assets/page/css/mixin.scss';
 var styleConfig     = './sys/assets/page/css/config.scss';
-var scssStyle       = './sys/assets/page/css/*.scss';
+var scssStyle       = './sys/assets/page/css/page/*.scss';
 var scssOut         = './assets/page/css/';
 var scssMinOut      = './assets/page/css/optimized/';
 var concatFile      = 'main';
