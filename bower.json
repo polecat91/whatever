@@ -1,0 +1,31 @@
+{
+    "name": "whatever",
+    "authors": [
+        "polecat91"
+    ],
+    "description": "whatever test project",
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "documentation"
+    ],
+    "devDependencies": {
+        "jquery": "^2.2.3",
+        "bootstrap": "^3.3.7",
+        "font-awesome": "fontawesome#^4.6.1",
+        "nprogress": "^0.2.0",
+        "bootstrap-progressbar": "^0.9.0",
+        "bootstrap-wysiwyg": "bootstrap-wysiwyg-steveathon#^1.0.5",
+        "normalize-css": "^4.1.1",
+        "pnotify": "^3.0.0",
+        "datatables.net": "^1.10.11",
+        "datatables.net-bs": "^1.10.11",
+        "datatables.net-buttons": "^1.1.2",
+        "datatables.net-buttons-bs": "^1.1.2",
+        "bootstrap3-wysihtml5-bower": "*"
+    },
+    "resolutions": {
+        "jquery": "^2.2.3",
+        "fastclick": "^1.0.6"
+    }
+}
