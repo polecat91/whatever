@@ -25,6 +25,62 @@
 		}
 
 
+        public function signUp($rowData) {
+            global $objDb;
+            if($rowData['password'] != $rowData['re_password']) {
+                return array("isError" => TRUE, "message" => 'A két jelszó nem térhet el.');
+            }
+            if($rowData['username'] && $rowData['email']) {
+                $numIsEmail = $objDb->getOne("
+                    SELECT
+                        1
+                    FROM
+                        user
+                    WHERE
+                        email = '{$rowData['email']}'
+                ");
+                if(!DB::isError($numIsEmail) && $numIsEmail) {
+                    return array("isError" => TRUE, "message" => 'Az email cím már foglalt.');
+                }
+                $numIsUser = $objDb->getOne("
+                    SELECT
+                        1
+                    FROM
+                        user
+                    WHERE
+                        username = '{$rowData['username']}'
+                ");
+                if(!DB::isError($numIsUser) && $numIsUser) {
+                    return array("isError" => TRUE, "message" => 'A felhasználónév már foglalt.');
+                }
+
+                $objAddUser = $objDb->query("
+                    INSERT INTO
+                        user
+                    SET
+                         username = '{$rowData['username']}'
+                        ,email = '{$rowData['email']}'
+                        ,password = '{$this->setPasswd($rowData['password'])}'
+                        ,create_user = '{$rowData['username']}'
+                ");
+                if(!DB::isError($objAddUser)) {
+                    $numLadtID = $objDb->getOne('SELECT LAST_INSERT_ID()');
+                    $rowUser = array(
+                         'user_id' => $numLadtID
+                        ,'user_status' => 1
+                        ,'username' => $rowData['username']
+                        ,'email' => $rowData['email']
+                    );
+                    
+                    $this->set($rowUser);
+                    $_SESSION['user'] = $rowUser;
+                    return array("isError" => FALSE, "message" => 'Sikeres regisztráció.');
+                }
+            }
+            
+            return array("isError" => TRUE, "message" => 'Sikertelen regisztráció.');
+        }
+
         public function login($strEmail, $strPassword) {
             global $objDb;
             

@@ -47,7 +47,7 @@
             } else {
 //                TODO      menu es page tabla, jogosultsag kezeles, amennyiben lesz tobb page is
                 if(!$this->_rowUser) {
-                    $this->_strPageName = 'Login';
+                    $this->_strPageName = 'Sign';
                 } else if(is_file("{$APP_CONF['lib']}Page/" . trim(ucfirst($rowUrl[0])) . ".php")) {
 //                    TODO      tovabbi oldalak betoltese eseten. Itt most nem lesz.
                     $this->_strPageName = trim(ucfirst($rowUrl[0]));

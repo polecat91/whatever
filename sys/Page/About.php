@@ -61,7 +61,7 @@
                     <div class="form-group" style="float: left;width: 100%;margin: 0;">
                         <label class="control-label col-xs-3 col-lg-2 text-right">Cím</label>
                         <div class="col-xs-9 col-lg-10">
-                            <input type="text" name="title" required="required" class="form-control">
+                            <input type="text" name="title" required="required" maxlength="256" class="form-control">
                         </div>
                     </div>
                     <div class="form-group" style="float: left;width: 100%;margin: 0;">

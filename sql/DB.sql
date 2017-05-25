@@ -43,11 +43,3 @@ ALTER TABLE task ADD INDEX(status);
 ALTER TABLE task ADD INDEX(user_id);
 ALTER TABLE task ADD INDEX(title);
 ALTER TABLE task ADD INDEX(is_success);
-
-
-INSERT INTO
-    user
-SET
-     username = 'Test user'
-    ,email = 'test@example.com'
-    ,password = 'fdcbf97032613ba64d3cd06a34cad461';
