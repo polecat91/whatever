@@ -27,8 +27,8 @@
         signIn: function() {
             var self = this,
                 strEmail = $.trim(self.getLoginEmail().val()),
-                strPassword = $.trim(self.getLoginPassword().val()),
-                strDo = {};
+                strPassword = $.trim(self.getLoginPassword().val());
+
             if(self.isValidEmail(strEmail) && strPassword) {
                 var strDo = JSON.stringify({
                     "email":strEmail,
@@ -39,7 +39,7 @@
                     if(isLogin) {
                         location.reload();
                     } else {
-                        self.errorLogin("error login");
+                        SCOPE.addNotify('Error', 'Invalid email or password.<br />Try again.', true);
                     }
                 });
             } else {
@@ -47,7 +47,7 @@
                 if(!self.isValidEmail(strEmail)) {
                     strError = 'Invalid email address';
                 }
-                self.errorLogin(strError);
+                SCOPE.addNotify('Error', strError, true);
             }
         
         },
@@ -59,18 +59,6 @@
                 return false;
             }
         },
-        errorLogin: function(strError) {
-            var self = this,
-                numOutTime = 100 * parseInt(strError.length);
-        
-            self.getNotify().html(strError).css({"background":"red"}).fadeIn(100, function(){
-                setTimeout(function(){
-                    self.getNotify().fadeOut(400, function() {
-                        self.getNotify().html('');
-                    });
-                },numOutTime);
-            });
-        }
     };
     
     LOGIN.getLoginForm().submit(function(){

@@ -8,12 +8,8 @@
 	{
 
         private $_numUserID;
-        private $_strUserFirstName;
-        private $_strUserLastName;
+        private $_strUserName;
         private $_strUserEmai;
-        private $_strUserPhone;
-        private $_numGroupID;
-        private $_strModuleName;
         private $_strPageName;
         private $_numPageID;
 
@@ -23,12 +19,8 @@
 
         public function __construct() {
             $this->_numUserID = NULL;
-            $this->_strUserFirstName = NULL;
-            $this->_strUserLastName = NULL;
+            $this->_strUserName = NULL;
             $this->_strUserEmai = NULL;
-            $this->_strUserPhone = NULL;
-            $this->_numGroupID = NULL;
-            $this->_strModuleName = NULL;
             $this->_strPageName = NULL;
             $this->_numPageID = NULL;
 
@@ -40,7 +32,6 @@
 
         /**
          * 
-         * @global type $ADM
          * @global type $rowUrl
          * @global type $objDb
          */
@@ -49,18 +40,17 @@
 
             if($rowUrl[0] == 'Webservice') {
 //            Amennyiben ajax hívás volt
-                $strClassName = "Web_{$rowUrl[0]}_{$rowUrl[1]}";
-                if(class_exists("Web_{$rowUrl[0]}_{$rowUrl[1]}")) {
+                $strClassName = "{$rowUrl[0]}_{$rowUrl[1]}";
+                if(class_exists("{$rowUrl[0]}_{$rowUrl[1]}")) {
                     $rowWebserviceObject[] = new $strClassName;
                 }
             } else {
-//            normál oldalbetöltésif(!$this->_rowUser) {
+//                TODO      menu es page tabla, jogosultsag kezeles, amennyiben lesz tobb page is
                 if(!$this->_rowUser) {
                     $this->_strPageName = 'Login';
                 } else if(is_file("{$APP_CONF['lib']}Page/" . trim(ucfirst($rowUrl[0])) . ".php")) {
+//                    TODO      tovabbi oldalak betoltese eseten. Itt most nem lesz.
                     $this->_strPageName = trim(ucfirst($rowUrl[0]));
-                } else if(!$rowUrl[0]) {
-                    $this->_strPageName = ucfirst($APP_CONF['default_page']);
                 } else {
                     $this->_strPageName = '404';
                 }
@@ -72,10 +62,8 @@
         /**
          * Betöltjük az oldal teljes tartalmát [head|header|content|footer]
          * @global type $APP_CONF
-         * @global type $ADM
          * @global type $rowUrl
          * @param type $rowWebserviceObject
-         * @author Csáki Viktor <Developer>
          */
         private function loadPage($rowWebserviceObject = NULL) {
             global $APP_CONF, $rowUrl;
@@ -106,29 +94,27 @@
          * file név és elérés alapján betöltjük a css/js-eket
          * TODO automatizálni, hogy ne legyen egyesével beégetve a head/footer-ben
          * TODO ajax híváskor is be kell tölteni a megfelelőt, hogy ne első betöltéskor legyen bent minden. Csak ami kell
-         * @global type $ADM
          * @global type $APP_CONF
          * @param type $strFileName
          * @param type $strPath
-         * @author Csáki Viktor <Developer>
          */
         public static function getScript($strFileName, $strPath = NULL) {
-            global $ADM, $APP_CONF;
+            global $APP_CONF;
             if($strFileName) {
                 $strExtension = pathinfo($strFileName)['extension'];
                 if($strPath) {
                     $strFilePath = "{$APP_CONF['path']}{$strPath}{$strFileName}";
                 } else {
-                    $strFilePath = ($strExtension == 'js' ? "{$ADM['js']}{$strFileName}" : "{$ADM['css']}{$strFileName}");
+                    $strFilePath = ($strExtension == 'js' ? "{$APP_CONF['js']}{$strFileName}" : "{$APP_CONF['css']}{$strFileName}");
                 }
                 if(is_file($strFilePath)) {
                     $strFileTime = "?v=" . filemtime($strFilePath);
                     if($strExtension == 'css') {
                         print "
-                            <link href=\"" . ($strPath ? "{$APP_CONF['base_url']}{$strPath}" : "{$APP_CONF['base_url']}assets/css/") . "{$strFileName}{$strFileTime}\" rel=\"stylesheet\">";
+                            <link href=\"" . ($strPath ? "{$APP_CONF['base_url']}{$strPath}" : "{$APP_CONF['base_url']}assets/page/css/") . "{$strFileName}{$strFileTime}\" rel=\"stylesheet\">";
                     } else if($strExtension == 'js') {
                         print "
-                            <script src=\"" . ($strPath ? "{$APP_CONF['base_url']}{$strPath}" : "{$APP_CONF['base_url']}assets/js/") . "{$strFileName}{$strFileTime}\"></script>";
+                            <script src=\"" . ($strPath ? "{$APP_CONF['base_url']}{$strPath}" : "{$APP_CONF['base_url']}assets/page/js/") . "{$strFileName}{$strFileTime}\"></script>";
                     }
                 }
             }
@@ -136,8 +122,8 @@
 
         final private function addWebservice() {
             $rowClassName = array(
-                $this->_strPageName => "Web_Webservice_{$this->_strPageName}",
-                "web" => "Web_Webservice_About"
+                $this->_strPageName => "Webservice_{$this->_strPageName}",
+                "web" => "Webservice_About"
             );
 
             foreach($rowClassName AS $strParam => $strClassName) {
@@ -153,17 +139,11 @@
             return $this->_rowUser;
         }
 
-        public function getStrUserFirstName() {
-            return $this->_rowUser['first_name'];
-        }
         public function getStrUserLastName() {
             return $this->_rowUser['last_name'];
         }
         public function getStrUserEmail() {
             return $this->_rowUser['email'];
-        }
-        public function getStrUserPhone() {
-            return $this->_rowUser['phone'];
         }
         public function getStrUserGroupID() {
             return $this->_rowUser['group_id'];

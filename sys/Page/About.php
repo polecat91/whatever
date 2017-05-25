@@ -1,289 +1,94 @@
-<div class="row tile_count">
-    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> Total Users</span>
-        <div class="count">-</div>
-        <span class="count_bottom"><i class="green">-% </i> From last Week</span>
-    </div>
-    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-clock-o"></i> Average Time</span>
-        <div class="count">-</div>
-        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>-% </i> From last Week</span>
-    </div>
-    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> Total Males</span>
-        <div class="count green">-</div>
-        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>-% </i> From last Week</span>
-    </div>
-    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> Total Females</span>
-        <div class="count">-</div>
-        <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>-% </i> From last Week</span>
-    </div>
-    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> Total Collections</span>
-        <div class="count">-</div>
-        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>-% </i> From last Week</span>
-    </div>
-    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> Total Connections</span>
-        <div class="count">-</div>
-        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>-% </i> From last Week</span>
-    </div>
-</div>
-
-<div class="row tile_count">
-    <div class="col-md-6 col-xs-12 profile-list-container">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Admins</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li>
-                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <?php
-                foreach($tblUser AS $rowUser) {
-                    $strIsMy = NULL;
-                    if($_SESSION['admin_user']['user_id'] === $rowUser['user_id']) {
-                        $strIsMy = ' active-row';
-                    }
-                ?>
-                <article class="media event<?=$strIsMy?>">
-                    <a class="pull-left profile">
-                        <img src="<?php print $ADM['images'] . 'profile-avatar.jpg'?>" alt="">
-                    </a>
-                    <div class="media-body">
-                        <a class="title" href="<?php print ($strIsMy ? "{$ADM['base_url']}settings" : 'javascript:void(0)');?>"><?=$rowUser['first_name']?> <?=$rowUser['last_name']?></a>
-                        <p><small>Group></small> <?=$rowUser['group_name']?></p>
-                        <p><small>Broad></small> <?php print date("Y.m.d.", strtotime($rowUser['create_date'])); ?></p>
-                    </div>
-                </article>
-                <?php
-                }
-                ?>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-<!--
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-md-4 col-sm-4 col-xs-12">
-            <div class="x_panel tile fixed_height_320">
-            <div class="x_title">
-                <h2>App Versions</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li>
-                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Settings 1</a>
-                                </li>
-                                <li><a href="#">Settings 2</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="close-link"><i class="fa fa-close"></i></a>
-                        </li>
-                    </ul>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <h4>App Usage across versions</h4>
-                <div class="widget_summary">
-                    <div class="w_left w_25">
-                        <span>0.1.5.2</span>
-                    </div>
-                    <div class="w_center w_55">
-                        <div class="progress">
-                            <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 66%;">
-                                <span class="sr-only">60% Complete</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w_right w_20">
-                        <span>123k</span>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-
-                <div class="widget_summary">
-                    <div class="w_left w_25">
-                        <span>0.1.5.3</span>
-                    </div>
-                    <div class="w_center w_55">
-                    <div class="progress">
-                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
-                            <span class="sr-only">60% Complete</span>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="w_right w_20">
-                        <span>53k</span>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="widget_summary">
-                    <div class="w_left w_25">
-                        <span>0.1.5.4</span>
-                    </div>
-                    <div class="w_center w_55">
-                        <div class="progress">
-                            <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                                <span class="sr-only">60% Complete</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w_right w_20">
-                    <span>23k</span>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="widget_summary">
-                    <div class="w_left w_25">
-                        <span>0.1.5.5</span>
-                    </div>
-                    <div class="w_center w_55">
-                    <div class="progress">
-                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 5%;">
-                            <span class="sr-only">60% Complete</span>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="w_right w_20">
-                        <span>3k</span>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="widget_summary">
-                    <div class="w_left w_25">
-                        <span>0.1.5.6</span>
-                    </div>
-                    <div class="w_center w_55">
-                        <div class="progress">
-                            <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 2%;">
-                                <span class="sr-only">60% Complete</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w_right w_20">
-                    <span>1k</span>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-
-                </div>
-            </div>
+        <div class="col-xs-12 text-center add-new-content">
+            <button class="btn btn-success">
+                Új feladat
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-responsive table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Törlés</th>
+                        <th>ID</th>
+                        <th>Cím</th>
+                        <th>Leírás</th>
+                        <th>Elvégzett</th>
+                        <th>Időpont</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach($tblTask AS $rowTask) {
+                        $strSuccess = ($rowTask['is_success'] != 0 ?
+                                    '<span class="glyphicon glyphicon-ok" aria-hidden="true"><span style="color: transparent">1</span></span>':
+                                    '<span class="glyphicon glyphicon-remove" aria-hidden="true"><span style="color: transparent">0</span></span>');
+                        $strRemove = '<button class="btn btn-default remove-confirm" data-toggle="confirmation" data-popout="true" data-singleton="true"><i class="fa fa-times remove-row" aria-hidden="true"></i></button>';
+                        print "
+                            <tr>
+                                <td>{$strRemove}</td>
+                                <td>{$rowTask['id']}</td>
+                                <td>{$rowTask['title']}</td>
+                                <td>{$rowTask['description']}</td>
+                                <td>{$strSuccess}</td>
+                                <td>" . time_elapsed_string($rowTask['create_date']) . "</td>
+                            </tr>
+                        ";
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
 
-
-
-<div class="col-md-4 col-sm-4 col-xs-12">
-    <div class="x_panel">
-        <div class="x_title">
-            <h2>Recent Activities <small>Sessions</small></h2>
-            <ul class="nav navbar-right panel_toolbox">
-                <li>
-                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="#">Settings 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Settings 2</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="close-link"><i class="fa fa-close"></i></a>
-                </li>
-            </ul>
-            <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-            <div class="dashboard-widget-content">
-
-                <ul class="list-unstyled timeline widget">
-                    <li>
-                        <div class="block">
-                            <div class="block_content">
-                                <h2 class="title">
-                                    <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
-                                </h2>
-                                <div class="byline">
-                                    <span>13 hours ago</span> by <a>Jane Smith</a>
-                                </div>
-                                <p class="excerpt">Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
-                                </p>
-                            </div>
+<div
+    class="modal fade task-item"
+    tabindex="-1"
+    role="dialog"
+>
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Feladat</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group" style="float: left;width: 100%;margin: 0;">
+                        <label class="control-label col-xs-3 col-lg-2 text-right">Cím</label>
+                        <div class="col-xs-9 col-lg-10">
+                            <input type="text" name="title" required="required" class="form-control">
                         </div>
-                    </li>
-                    <li>
-                        <div class="block">
-                            <div class="block_content">
-                                <h2 class="title">
-                                    <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
-                                </h2>
-                                <div class="byline">
-                                    <span>13 hours ago</span> by <a>Jane Smith</a>
-                                </div>
-                                <p class="excerpt">Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
-                                </p>
-                            </div>
+                    </div>
+                    <div class="form-group" style="float: left;width: 100%;margin: 0;">
+                        <label class="control-label col-xs-3 col-lg-2 text-right">Leírás</label>
+                        <div class="col-xs-9 col-lg-10">
+                            <textarea name="description" required="required" class="form-control"></textarea>
                         </div>
-                    </li>
-                    <li>
-                        <div class="block">
-                            <div class="block_content">
-                                <h2 class="title">
-                                    <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
-                                </h2>
-                                <div class="byline">
-                                    <span>13 hours ago</span> by <a>Jane Smith</a>
-                                </div>
-                                <p class="excerpt">Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
-                                </p>
-                            </div>
+                    </div>
+                    <div class="form-group" style="float: left;width: 100%;margin: 0;">
+                        <label class="control-label col-xs-3 col-lg-2 text-right">Elvégzett</label>
+                        <div class="col-xs-9 col-lg-10">
+                            <label class="radio-content pull-left">
+                                <input type="radio" name="success" required="required" class="form-control pull-left" value="0" checked>
+                                <span class="success-label pull-left">Nem</span>
+                            </label>
+                            <label class="radio-content pull-left">
+                            <input type="radio" name="success" required="required" class="form-control pull-left" value="1">
+                            <span class="success-label pull-left">Igen</span>
+                            </label>
                         </div>
-                    </li>
-                    <li>
-                        <div class="block">
-                            <div class="block_content">
-                                <h2 class="title">
-                                    <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
-                                </h2>
-                                <div class="byline">
-                                    <span>13 hours ago</span> by <a>Jane Smith</a>
-                                </div>
-                                <p class="excerpt">Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
-                                </p>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-toolbar" data-dismiss="modal">Mégse</button>
+                <button type="button" class="btn btn-success">Mentés</button>
             </div>
         </div>
     </div>
-</div>-->
+</div>

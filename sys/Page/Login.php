@@ -18,12 +18,7 @@
                                     <label for="lg_password" class="sr-only">Password</label>
                                     <input type="password" class="form-control login-password" id="lg_password" required="required" placeholder="Password">
                                 </div>
-<!--                                <div class="form-group login-group-checkbox pull-left">
-                                    <input type="checkbox" id="lg_remember" name="lg_remember" class="pull-left">
-                                    <label class="pull-left" for="lg_remember">remember</label>
-                                </div>-->
                             </div>
-                            <!--<button type="submit" class="login-button"><span class="fa fa-chevron-right"></span></button>-->
                             <button type="submit" class="login-button btn-primary text-center"><strong>Login</strong></button>
                         </div>
                     </form>

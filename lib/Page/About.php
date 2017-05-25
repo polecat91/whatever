@@ -1,22 +1,17 @@
 <?php
 
-    class Admin_Page_About
+    class Page_About extends Web_About
 	{
 		
         public function __construct() {
             $this->contentDisplay();
 		}
         
-        private function adminUser() {
-            $objAdminUser = new Admin_User();
-            return $objAdminUser->getUserBasicInfo();
-        }
-        
         public function contentDisplay() {
             global $APP_CONF, $ADM;
             
             //own setup
-            $tblUser = $this->adminUser();
+            $tblTask = parent::getTask();
             //own setup END
             
             //CONST setup

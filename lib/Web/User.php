@@ -1,67 +1,80 @@
 <?php
 
-    class Pre
-    {
-        public static function data($tbl, $isDebug = FALSE) {
-            if($tbl) {
-                print '<pre>';
-                if($isDebug) {
-                    var_dump($tbl);
-                } else {
-                    print_r($tbl);
-                }
-                print '</pre>';
-            }
-        }
-    }
-    
-    class Manage
-    {
-        /**
-         * Create AND(OR) modify log json by parent Class dir name [date].json file
-         * Every day create a new json file
-         * Log type is json
-         * @param type $strMsg
-         * @param type $strType: [NULL || 0 == error], [1 == notice]
-         * @author Csáki Viktor
-         */
-        public static function Log($strMsg, $strType = NULL) {
-            global $APP_CONF;
+
+	class Web_User
+	{
+
+		private $_numUserID;
+		private $_strUserName;
+		private $_strUserEmai;
+        private $_strPageName;
+
+        public function __construct($numUserID = NULL) {
+            $this->_numUserID = $numUserID;
+            $this->_strUserName = NULL;
+            $this->_strUserEmai = NULL;
+            $this->_strPageName = NULL;
+
+		}
+
+
+		private function set($rowUser) {
+            $this->_numUserID = $rowUser['id'];
+            $this->_strUserName = $rowUser['username'];
+            $this->_strUserEmail = $rowUser['email'];
+		}
+
+
+        public function login($strEmail, $strPassword) {
+            global $objDb;
             
-            if(!$strMsg) {
+            if(!$strEmail || !$strPassword) {
                 return false;
             }
-            
-            $strLogDir = $APP_CONF['log'] . debug_backtrace()[1]['class'] . "/";
-            $strFileName =  date("ymd") . ".json";
-            $tblLog = array();
-            $strDate = date("Y-m-d H:i:s");
-            
-            if(is_file($strLogDir.$strFileName)) {
-                $strLogJson = file_get_contents($strLogDir.$strFileName);
-                $tblLog = json_decode($strLogJson, true);
-            }
-            
-            $tblLog[] = array(
-                 "date" => $strDate
-                ,"type" => $strType
-                ,"message" => $strMsg
-            );
-            $strLog = json_encode($tblLog);
-            
-            if (!is_dir($strLogDir)) {
-                mkdir($strLogDir, 0664);
-            }
-            file_put_contents($strLogDir.$strFileName, $strLog);
-            
-        }
-        
-        public static function flush($numPercent = 0) {
-//            sleep(1);
-//            print json_encode(array('flush' => $numPercent));
-//            ob_flush();
-//            flush();
-        }
-    }
 
+            $rowUser = $objDb->getRow("
+                SELECT
+                     id AS user_id
+                    ,status AS user_status
+                    ,username
+                    ,email
+                FROM
+                    user
+                WHERE
+                    email = '{$strEmail}'
+                    AND password = '{$this->setPasswd($strPassword)}'
+                    AND status IS TRUE
+            ");
+
+            if(!DB::isError($rowUser) && $rowUser) {
+//                accept to login
+                $this->set($rowUser);
+                $_SESSION['user'] = $rowUser;
+                
+                return TRUE;
+            }
+//            failed login -- invalid email and/or password
+            return FALSE;
+
+		}
+
+		public function logout() {
+            if(session_destroy()) {
+                return TRUE;
+            }
+
+            return FALSE;
+		}
+
+
+        /**
+         * Legeneraljuk az md5-olt jelszot
+         * @param type $strDefaultPassword
+         * @return type
+         */
+        private function setPasswd($strDefaultPassword) {
+            return md5("p4C41P0Rk01tB4r4cK1EkV4Rr41{$strDefaultPassword}");
+        }
+
+	}	
 ?>

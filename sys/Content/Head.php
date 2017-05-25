@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     
-    <link rel="icon" href="<?=$ADM['images']?>favicon.ico" type="image/x-icon"/>
-    <link rel="shortcut icon" href="<?=$ADM['images']?>favicon.ico" type="image/x-icon"/>
+    <link rel="icon" href="<?=$APP_CONF['base_url']?>assets/page/images/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="<?=$APP_CONF['base_url']?>assets/page/images/favicon.ico" type="image/x-icon"/>
 
     <title><?php print $strPage; ?></title>
 
@@ -25,27 +25,13 @@
     <?=Init::getScript("responsive.bootstrap.min.css", "assets/vendors/datatables.net-responsive-bs/css/")?>
     <?=Init::getScript("scroller.bootstrap.min.css", "assets/vendors/datatables.net-scroller-bs/css/")?>
     
-    <!-- bootstrap-daterangepicker -->
-    <?=Init::getScript("daterangepicker.css", "assets/vendors/bootstrap-daterangepicker/")?>
-    <!-- Bootstrap Colorpicker -->
-    <?=Init::getScript("bootstrap-colorpicker.min.css", "assets/vendors/mjolnic-bootstrap-colorpicker/dist/css/")?>
-    <?=Init::getScript("cropper.min.css", "assets/vendors/cropper/dist/")?>
-    <!-- Switchery -->
-    <?=Init::getScript("switchery.min.css", "assets/vendors/switchery/dist/")?>
-    
     <!-- PNotify -->
     <?=Init::getScript("pnotify.css", "assets/vendors/pnotify/dist/")?>
     <?=Init::getScript("pnotify.buttons.css", "assets/vendors/pnotify/dist/")?>
     <?=Init::getScript("pnotify.nonblock.css", "assets/vendors/pnotify/dist/")?>
     
-    <!--fileupload-dropzone-->
-    <?=Init::getScript("dropzone.min.css", "/assets/vendors/dropzone/dist/min/")?>
-
     <!-- Custom Theme Style -->
     <?=Init::getScript("main.css")?>
-    
-    <!-- bootstrap-wysiwyg -->
-    <?=Init::getScript("bootstrap3-wysihtml5.min.css", "assets/vendors/bootstrap3-wysihtml5-bower/dist/")?>
     
     
     <script type="text/javascript">

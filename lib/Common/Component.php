@@ -1,6 +1,39 @@
 <?php
 
     //functions
+
+    /**
+     * set date to time ago
+     * @param type $strDateTime
+     * @return type
+     */
+    function time_elapsed_string($strDateTime) {
+        $objNow = new DateTime;
+        $objAgo = new DateTime($strDateTime);
+        $objDiffTime = $objNow->diff($objAgo);
+
+        $objDiffTime->w = floor($objDiffTime->d / 7);
+        $objDiffTime->d -= $objDiffTime->w * 7;
+
+        $rowString = array(
+             'y' => 'éve'
+            ,'m' => 'hónapja'
+            ,'w' => 'hete'
+            ,'d' => 'napja'
+            ,'h' => 'órája'
+            ,'i' => 'perce'
+            ,'s' => 'másodperce'
+        );
+        foreach ($rowString as $strKey => &$strTimeValue) {
+            if ($objDiffTime->$strKey) {
+                $strTimeValue = $objDiffTime->$strKey . ' ' . $strTimeValue;
+            } else {
+                unset($rowString[$strKey]);
+            }
+        }
+        $rowString = array_values(array_filter($rowString));
+        return $rowString ? "{$rowString[0]}, {$rowString[1]}"  : 'pont most';
+    }
     
     /**
      * Autoloader
@@ -37,7 +70,7 @@
     
     /**
      * fast check JSON
-     * @param type $string
+     * @param type $strString
      * @return type
      */
     function isJson($strString) {
