@@ -103,9 +103,10 @@
             ");
 
             if(!DB::isError($rowUser) && $rowUser) {
-//                accept to login
+//                accept to login and set default UserData
                 $this->set($rowUser);
                 $_SESSION['user'] = $rowUser;
+                $_SESSION['isCompact'] = FALSE;
                 
                 return TRUE;
             }

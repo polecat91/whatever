@@ -5,9 +5,11 @@
 	{
 
         private $_numTaskID;
+        private $_isCompact;
 
         public function __construct($numTaskID = NULL) {
             $this->_numTaskID = $numTaskID;
+            $this->_isCompact = $_SESSION['isCompact'];
         }
         
         public function getTask() {
@@ -26,6 +28,11 @@
                     user_id = {$_SESSION['user']['user_id']}
                     AND status IS TRUE
             ";
+            if($this->_isCompact) {
+                $strGetTask .= "
+                    AND is_success IS FALSE
+                ";
+            }
             if($this->_numTaskID) {
                 $strGetTask .= "
                     AND id = {$this->_numTaskID}
@@ -40,12 +47,30 @@
                 $tblTask = $objDb->getAll($strGetTask);
             }
             if(!DB::isError($tblTask)) {
+                if(!$tblTask) return array();
+                
+                if(is_multi($tblTask)) {
+                        $tblTaskItem[] = array_walk_recursive($tblTask, "Web_About::setTime");
+                } else {
+                    $tblTask['create_date'] = time_elapsed_string($tblTask['create_date']);
+                }
                 return $tblTask;
             }
 
             return FALSE;
         }
         
+        public function setCompact() {
+            $_SESSION['isCompact'] = $this->_isCompact = !$_SESSION['isCompact'];
+            return $this->getTask();
+        }
+        
+        public static function setTime(&$key, &$item) {
+            if($item == 'create_date') {
+                $key = time_elapsed_string($key);
+            }
+        }
+
         /**
          * Add new task row
          * @global type $objDb
@@ -69,10 +94,9 @@
                 $objAddTask = $objDb->query($strAddTask);
                 if(!DB::isError($objAddTask)) {
                     $numLadtID = $objDb->getOne('SELECT LAST_INSERT_ID()');
-                    return array("isError" => FALSE, "message" => 'Feladat mentése sikerült.', 'numLastID' => $numLadtID);
+                    return $this->getTask();
                 }
             }
-            return array("isError" => TRUE, "message" => 'Feladat mentése sikertelen.');
         }
 
         /**
@@ -130,6 +154,5 @@
             }
             return array("isError" => TRUE, "message" => 'Feladat módosítása sikertelen.');
         }
-        
-	}	
+	}
 ?>

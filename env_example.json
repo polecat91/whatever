@@ -1,7 +1,7 @@
 {
 	"env": "local",
 	"base": {
-		"site_name": "_CLEAN_0_01",
+		"site_name": "PROJECT",
 		"base_local": "http://localhost/",
 		"base_path": "/var/www/html/"
     },
@@ -10,13 +10,6 @@
 		"username": "root",
 		"password": "user",
 		"hostspec": "localhost",
-		"database": "ha"
-    },
-	"mail": {
-		"host": "mail.authsmtp.com",
-		"port": "25",
-		"auth": "PLAIN",
-		"username": "USERNAME",
-		"password": "PASSWORD"
-	}
+		"database": "DATABASE"
+    }
 }

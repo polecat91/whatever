@@ -1,9 +1,13 @@
-<div class="container-fluid">
+<div class="container">
     <div class="row">
-        <div class="col-xs-12 text-center add-new-content">
-            <button class="btn btn-success">
+        <div class="col-xs-12 text-center setup-content">
+            <button class="btn btn-success add-new-task">
                 Új feladat
                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            </button>
+            <button class="btn btn-<?=$_SESSION['isCompact'] ? 'toolbar' : 'success'?> pull-right set-compact">
+                <i class="fa fa-eye<?=$_SESSION['isCompact'] ? '-slash' : ''?>" aria-hidden="true"></i>
+                Elvégzett feladatok
             </button>
         </div>
     </div>
@@ -34,7 +38,7 @@
                                 <td>{$rowTask['title']}</td>
                                 <td>{$rowTask['description']}</td>
                                 <td>{$strSuccess}</td>
-                                <td>" . time_elapsed_string($rowTask['create_date']) . "</td>
+                                <td>{$rowTask['create_date']}</td>
                             </tr>
                         ";
                     }

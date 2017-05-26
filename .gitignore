@@ -1,5 +1,6 @@
 nbproject
 node_modules
-.htaccess
 env.json
-assets/**/*
+gulpfile.js
+assets/vendors/**/*
+sys/assets/page/images/**/*

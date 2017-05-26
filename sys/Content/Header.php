@@ -1,6 +1,6 @@
         <div class="top_nav">
             <div class="nav_menu">
-                <nav class="text-center">
+                <nav class="container text-center">
                     <span class="user-content pull-left">
                         <i class="fa fa-user"></i>
                         <?=$_SESSION['user']['username']?>

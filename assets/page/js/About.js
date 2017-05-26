@@ -18,10 +18,13 @@
             return SCOPE.getDocument().find('.task-item');
         },
         getAddBtn: function() {
-            return SCOPE.getDocument().find('.add-new-content .btn');
+            return SCOPE.getDocument().find('.setup-content .add-new-task');
         },
         getSaveBtn: function() {
             return this.getAddModal().find('.btn-success');
+        },
+        getCompactBtn: function() {
+            return SCOPE.getDocument().find('.set-compact');
         },
         
         getLogOut: function() {
@@ -83,25 +86,14 @@
                 } else {
                     AJAX_AddTask(JSON.stringify({title: strTitle, desc: strDesc, success: numSuccess}), function(strResponse){
                         if(strResponse) {
-                            var rowResponse = JSON.parse(strResponse);
-                            if(rowResponse.isError) {
-                                SCOPE.addNotify('Error', rowResponse.message, rowResponse.isError);
-                            } else {
-                                SCOPE.addNotify('Success', rowResponse.message, rowResponse.isError);
-                                var strSuccess = (numSuccess != 0 ?
-                                        '<span class="glyphicon glyphicon-ok" aria-hidden="true"><span style="color: transparent">1</span></span>':
-                                        '<span class="glyphicon glyphicon-remove" aria-hidden="true"><span style="color: transparent">0</span></span>');
-                                var strRemove = '<button class="btn btn-default remove-confirm" data-toggle="confirmation" data-popout="true" data-singleton="true"><i class="fa fa-times remove-row" aria-hidden="true"></i></button>'
-                                ABOUT.objDataTable.row.add([
-                                     strRemove
-                                    ,rowResponse.numLastID
-                                    ,strTitle
-                                    ,strDesc
-                                    ,strSuccess
-                                    ,'pont most'
-                                ]).draw( false );
+                            var tblResponse = JSON.parse(strResponse);
+                            self.reloadTable(tblResponse);
+                            if(tblResponse.length > 0) {
+                                SCOPE.addNotify('Success', 'Feladat mentése sikerült.', false);
                                 self.getAddModal().find('form')[0].reset();
                                 ABOUT.getAddModal().modal('hide');
+                            } else if (tblResponse != true) {
+                                SCOPE.addNotify('Error', 'Feladat mentése sikertelen.', true);
                             }
                         }
                     });
@@ -155,8 +147,60 @@
                 });
             }
         },
+        
+        setCompact: function() {
+            var self = ABOUT,
+                strSuccess = '';
 
+            AJAX_SetCompact(true, function(strResponse){
+                console.log(strResponse);
+                if(strResponse) {
+                    var tblResponse = JSON.parse(strResponse);
+                    self.toggleCompactBtn();
+                    self.reloadTable(tblResponse);
+                }
+            });
+        },
+        
+        reloadTable: function(tblResponse) {
+            var self = this,
+                strSuccess = '',
+                strRemove = '<button class="btn btn-default remove-confirm" data-toggle="confirmation" data-popout="true" data-singleton="true"><i class="fa fa-times remove-row" aria-hidden="true"></i></button>'
+            
+            self.objDataTable
+                .clear()
+                .draw();
+            $.each(tblResponse, function(numKey, rowResponse) {
+                strSuccess = (rowResponse.is_success != 0 ?
+                        '<span class="glyphicon glyphicon-ok" aria-hidden="true"><span style="color: transparent">1</span></span>':
+                        '<span class="glyphicon glyphicon-remove" aria-hidden="true"><span style="color: transparent">0</span></span>');
+                self.objDataTable.row.add([
+                     strRemove
+                    ,rowResponse.id
+                    ,rowResponse.title
+                    ,rowResponse.description
+                    ,strSuccess
+                    ,rowResponse.create_date
+                ]).draw( false );
+            });
+        },
 
+        toggleCompactBtn: function() {
+            var self = this,
+                objFa = self.getCompactBtn().find('.fa');
+
+            if(self.getCompactBtn().hasClass('btn-success')) {
+                self.getCompactBtn().removeClass('btn-success');
+                self.getCompactBtn().addClass('btn-toolbar');
+                objFa.removeClass('fa-eye');
+                objFa.addClass('fa-eye-slash');
+            } else {
+                self.getCompactBtn().addClass('btn-success');
+                self.getCompactBtn().removeClass('btn-toolbar');
+                objFa.addClass('fa-eye');
+                objFa.removeClass('fa-eye-slash');
+            }
+        },
 
         initDataTable: function() {
             ABOUT.objDataTable = ABOUT.getTable().DataTable( {
@@ -229,6 +273,7 @@
             ABOUT.objDataTableRow = {};
             ABOUT.getAddModal().find('form')[0].reset();
         });
+        ABOUT.getCompactBtn().on("click", ABOUT.setCompact);
     });
     
 })();

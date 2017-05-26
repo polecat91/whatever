@@ -36,7 +36,7 @@
         getSetSignUpBtn: function() {
             return this.getSignUpForm().find('.sign-button');
         },
-        
+
         signUp: function() {
             var self = this,
                 strUser = $.trim(self.getSignUpUser().val()),
@@ -63,7 +63,6 @@
                         } else {
                             SCOPE.addNotify('Success', rowResponse.message, rowResponse.isError);
                             SCOPE.addNotify('Success', 'Belépés folyamatban.<br />Kis türelmet.', false);
-                            NProgress.start();
                             setTimeout(function() {
                                 location.reload();
                             }, 2200);
@@ -72,7 +71,7 @@
                 });
             }
         },
-        
+
         signIn: function() {
             var self = this,
                 strEmail = $.trim(self.getLoginEmail().val()),

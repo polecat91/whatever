@@ -56,6 +56,12 @@
                 ,async:  true
             ';
             
+            $rowFinction['SetCompact'] = '
+                 cache:  false
+                ,type:   "POST"
+                ,async:  true
+            ';
+            
             if($rowFinction) {
                 foreach($rowFinction AS $strFunction => $strSetup) {
                     $this->_strFunction .= parent::createFunction($strFunction, $strSetup, $this->_strName);
@@ -83,6 +89,9 @@
                 case 'ModifyTask':
                     $this->taskEvent();
                     break;
+                case 'SetCompact':
+                    $this->setCompact();
+                    break;
             }
         }
 
@@ -95,6 +104,11 @@
         private function getTask() {
             $objAbout = new Web_About($this->_rowDo['id']);
             print json_encode($objAbout->getTask());
+        }
+        
+        private function setCompact() {
+            $objAbout = new Web_About();
+            print json_encode($objAbout->setCompact());
         }
 
         /**
